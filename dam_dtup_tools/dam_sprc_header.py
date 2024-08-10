@@ -23,7 +23,9 @@ class DamSprcHeader:
         """
 
         if isinstance(stream, BufferedReader):
+            stream_bytepos = stream.tell()
             stream = BitStream(stream)
+            stream.bytepos = stream_bytepos
 
         try:
             sprc_header: bytes = stream.peek("bytes:16")
@@ -46,7 +48,9 @@ class DamSprcHeader:
         """
 
         if isinstance(stream, BufferedReader):
+            stream_bytepos = stream.tell()
             stream = BitStream(stream)
+            stream.bytepos = stream_bytepos
 
         magic_bytes: bytes = stream.read("bytes:4")
         if magic_bytes != DamSprcHeader.__MAGIC_BYTES:
@@ -100,7 +104,9 @@ class DamSprcHeader:
         """
 
         if isinstance(stream, BufferedWriter):
+            stream_bytepos = stream.tell()
             stream = BitStream(stream)
+            stream.bytepos = stream_bytepos
 
         stream.append(b"SPRC")
         stream.append(pack("uintbe:16", self.revision))
