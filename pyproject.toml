@@ -4,13 +4,17 @@ version = "0.1.0"
 description = "DAM DTUP Tools"
 authors = ["soltia48 <soltia48@protonmail.com>"]
 license = "MIT"
-readme = "README.md"
-package-mode = false
+# readme = "README.md"
+packages = [{include = "dam_dtup_tools"}]
+
+[tool.poetry.scripts]
+dam-dtup-tools = "dam_dtup_tools.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.11"
 bitstring = "^4.2.3"
 fastcrc = "^0.3.0"
+fire = "^0.6.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4.2"
