@@ -58,12 +58,12 @@ class DamSprcHeader:
         revision: int = stream.read("uintbe:16")
         crc_value: int = stream.read("uintbe:16")
         force_flag: int = stream.read("uint:8")
-        unknown: bytes = stream.read("bytes:7")
+        unknown_0: bytes = stream.read("bytes:7")
 
-        return cls(revision, crc_value, force_flag, unknown)
+        return cls(revision, crc_value, force_flag, unknown_0)
 
     def __init__(
-        self, revision: int, crc_value: int, force_flag: int, unknown: bytes
+        self, revision: int, crc_value: int, force_flag: int, unknown_0: bytes
     ) -> None:
         """Constructor
 
@@ -71,13 +71,13 @@ class DamSprcHeader:
             revision (int): Revision
             crc_value (int): CRC value
             force_flag (int): Force flag
-            unknown (bytes): Unknown value
+            unknown_0 (bytes): Unknown value 0
         """
 
         self.revision = revision
         self.crc_value = crc_value
         self.force_flag = force_flag
-        self.unknown = unknown
+        self.unknown_0 = unknown_0
 
     def validate_crc(self, data: bytes | BufferedReader) -> bool:
         """Validate data with CRC value
@@ -112,4 +112,4 @@ class DamSprcHeader:
         stream.append(pack("uintbe:16", self.revision))
         stream.append(pack("uintbe:16", self.crc_value))
         stream.append(pack("uint:8", self.force_flag))
-        stream.append(self.unknown)
+        stream.append(self.unknown_0)

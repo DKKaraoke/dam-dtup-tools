@@ -13,12 +13,21 @@ class DamDtupSysexMessage:
     __COMMAND_TYPE = 0x04
     __DEVICE_NUMBER = 0x01
     __MODEL_ID = 0x7F
-    __UNKNOWN = 0x03
+    __UNKNOWN_0 = 0x03
 
     __MAX_PAYLOAD_SIZE = 0x800
 
     @staticmethod
-    def calculate_checksum(message: bytes):
+    def calculate_checksum(message: bytes) -> int:
+        """Calcurate Checksum
+
+        Args:
+            message (bytes): Message
+
+        Returns:
+            int: Checksum
+        """
+
         return ~sum(message) + 1 & 0x7F
 
     @classmethod
@@ -55,9 +64,9 @@ class DamDtupSysexMessage:
         model_id: bytes = stream.read("uint:8")
         if model_id != DamDtupSysexMessage.__MODEL_ID:
             raise ValueError(f"Invalid model_id. model_id={hex(model_id)}")
-        unknown: bytes = stream.read("uint:8")
-        if unknown != DamDtupSysexMessage.__UNKNOWN:
-            raise ValueError(f"Invalid unknown. unknown={hex(unknown)}")
+        unknown_0: bytes = stream.read("uint:8")
+        if unknown_0 != DamDtupSysexMessage.__UNKNOWN_0:
+            raise ValueError(f"Invalid unknown_0. unknown_0={hex(unknown_0)}")
         data_length_bytes: bytes = stream.read("bytes:2")
         data_length = data_length_bytes[0] << 7 | data_length_bytes[1]
         data: bytes = stream.read(f"bytes:{data_length}")

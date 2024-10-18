@@ -4,7 +4,9 @@ from . import DamDtupFile, DamSprcHeader
 
 
 class DamDtupTools:
-    def dtup2bin(self, dtup_file_path: str, bin_file_path: str):
+    """DAM DTUP Tools"""
+
+    def dtup2bin(self, dtup_file_path: str, bin_file_path: str) -> None:
         """DAM DTUP to BIN
 
         Args:
@@ -27,7 +29,7 @@ class DamDtupTools:
                 bin_file.write(dtup.get_payload())
 
 
-def main():
+def main() -> None:
     fire.Fire(DamDtupTools)
 
 
